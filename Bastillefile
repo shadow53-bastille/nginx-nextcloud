@@ -1,8 +1,11 @@
+ARG BASTILLE_ROOT=/usr/local/bastille
 ARG NEXTCLOUD_DOMAIN
 ARG NEXTCLOUD_IP
 INCLUDE https://github.com/shadow53-bastille/nginx-acme
 CMD certbot certonly --nginx -d ${NEXTCLOUD_DOMAIN}
 OVERLAY usr
 RENDER /usr/local/etc/nginx/conf.d/nextcloud.conf
+CMD mkdir -p /usr/local/nextcloud/root
+MOUNT ${BASTILLE_ROOT}/jails/nextcloud/root/usr/local/nextcloud/root usr/local/nextcloud/root ro 0 0
 SERVICE nginx reload
 
